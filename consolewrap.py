@@ -10,7 +10,10 @@ class ConsolewrapCommand(sublime_plugin.TextCommand):
         match = re.search(r"(\s*)", string)
         if match:
             if cursor.empty():
-                sublime.status_message('Please Make A Selection');
+                pos = cursor.begin()
+                view.insert(edit, pos, "console.log();")
+                view.sel().clear()
+                view.sel().add(sublime.Region(pos + 12))
             else:
                 var_text = view.substr(cursor)
                 inserted_console_template = "\n%sconsole.log('%s ' , %s);"
